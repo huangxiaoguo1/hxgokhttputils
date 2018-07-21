@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 可以自己传入OkHttpClient并添加自己的配置
      */
     private void init() {
-        File httpCacheDir = new File(this.getApplicationContext().getExternalCacheDir(), "xiaoguonet");
-        Cache cache = new Cache(httpCacheDir, 50 * 1024 * 1024);
+        File httpCacheDir = new File(UIUtils.getContext().getExternalCacheDir(), "xiaoguonet");
+        Cache cache = new Cache(httpCacheDir, 10 * 1024 * 1024);
         OkHttpClient mOkHttpClient = new OkHttpClient()
                 .newBuilder()
                 .cache(cache)
