@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.net.Proxy;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -80,8 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .writeTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .pingInterval(20, TimeUnit.SECONDS)
+                .proxy(Proxy.NO_PROXY)
                 .build();
-        HxgHttpUtils.init(mOkHttpClient);
+//        HxgHttpUtils.init(mOkHttpClient);
     }
 
     private void initView() {

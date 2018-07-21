@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
+import java.net.Proxy;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ class OkHttpEngine implements IHttpEngine {
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .pingInterval(20, TimeUnit.SECONDS)
+            .proxy(Proxy.NO_PROXY)
             .build();
 
     public static void callAll(){
