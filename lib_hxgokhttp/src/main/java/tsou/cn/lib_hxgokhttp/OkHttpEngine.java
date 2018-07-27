@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -40,9 +39,23 @@ class OkHttpEngine implements IHttpEngine {
             .proxy(Proxy.NO_PROXY)
             .build();
 
-    public static void callAll(){
+    public static void cancelTag(Object tag) {
+        for (Call call : mOkHttpClient.dispatcher().queuedCalls()) {
+            if (tag.equals(call.request().tag())) {
+                call.cancel();
+            }
+        }
+        for (Call call : mOkHttpClient.dispatcher().runningCalls()) {
+            if (tag.equals(call.request().tag())) {
+                call.cancel();
+            }
+        }
+    }
+
+    public static void callAll() {
         mOkHttpClient.dispatcher().cancelAll();
     }
+
     public static void init(OkHttpClient okHttpClient) {
         mOkHttpClient = okHttpClient;
     }
@@ -59,15 +72,18 @@ class OkHttpEngine implements IHttpEngine {
                 requestBuilder.addHeader(entry.getKey(), String.valueOf(entry.getValue()));
             }
         }
+        callBack.onBefore(context);
         Request request = requestBuilder.build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                callBack.onAfter();
                 callBack.onError(e);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                callBack.onAfter();
                 ResponseBody responseBody = response.body();
                 callBack.onSuccess(responseBody);
             }
@@ -89,15 +105,18 @@ class OkHttpEngine implements IHttpEngine {
         Request request = requestBuilder
                 .post(requestBody)
                 .build();
+        callBack.onBefore(context);
         mOkHttpClient.newCall(request).enqueue(
                 new Callback() {
                     @Override
                     public void onFailure(Call call, final IOException e) {
+                        callBack.onAfter();
                         callBack.onError(e);
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+                        callBack.onAfter();
                         ResponseBody responseBody = response.body();
                         callBack.onSuccess(responseBody);
                     }
@@ -119,15 +138,18 @@ class OkHttpEngine implements IHttpEngine {
         Request request = requestBuilder
                 .put(requestBody)
                 .build();
+        callBack.onBefore(context);
         mOkHttpClient.newCall(request).enqueue(
                 new Callback() {
                     @Override
                     public void onFailure(Call call, final IOException e) {
+                        callBack.onAfter();
                         callBack.onError(e);
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+                        callBack.onAfter();
                         ResponseBody responseBody = response.body();
                         callBack.onSuccess(responseBody);
                     }
@@ -149,15 +171,18 @@ class OkHttpEngine implements IHttpEngine {
         Request request = requestBuilder
                 .delete(requestBody)
                 .build();
+        callBack.onBefore(context);
         mOkHttpClient.newCall(request).enqueue(
                 new Callback() {
                     @Override
                     public void onFailure(Call call, final IOException e) {
+                        callBack.onAfter();
                         callBack.onError(e);
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+                        callBack.onAfter();
                         ResponseBody responseBody = response.body();
                         callBack.onSuccess(responseBody);
                     }
@@ -180,14 +205,17 @@ class OkHttpEngine implements IHttpEngine {
         Request request = requestBuilder
                 .post(requestBody)
                 .build();
+        callBack.onBefore(context);
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                callBack.onAfter();
                 callBack.onError(e);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                callBack.onAfter();
                 ResponseBody responseBody = response.body();
                 callBack.onSuccess(responseBody);
             }
@@ -209,14 +237,17 @@ class OkHttpEngine implements IHttpEngine {
         Request request = requestBuilder
                 .put(requestBody)
                 .build();
+        callBack.onBefore(context);
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                callBack.onAfter();
                 callBack.onError(e);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                callBack.onAfter();
                 ResponseBody responseBody = response.body();
                 callBack.onSuccess(responseBody);
             }
@@ -238,14 +269,17 @@ class OkHttpEngine implements IHttpEngine {
         Request request = requestBuilder
                 .delete(requestBody)
                 .build();
+        callBack.onBefore(context);
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                callBack.onAfter();
                 callBack.onError(e);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                callBack.onAfter();
                 ResponseBody responseBody = response.body();
                 callBack.onSuccess(responseBody);
             }

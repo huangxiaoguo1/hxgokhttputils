@@ -1,5 +1,6 @@
 package tsou.cn.lib_hxgokhttp.callback;
 
+import android.content.Context;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,6 +20,16 @@ import okhttp3.ResponseBody;
 public abstract class DownLoadFileCallBack implements EngineCallBack {
     protected static Handler mHandler = new Handler(Looper.getMainLooper());
     private String mUrl;
+
+    @Override
+    public void onBefore(Context context) {
+
+    }
+
+    @Override
+    public void onAfter() {
+
+    }
 
     public DownLoadFileCallBack(String url) {
         this.mUrl = url;

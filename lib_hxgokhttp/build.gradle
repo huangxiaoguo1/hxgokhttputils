@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.huangxiaoguo1'// huangxiaoguo1代表你github名字
+group = 'com.github.huangxiaoguo1'// huangxiaoguo1代表你github名字
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
@@ -30,4 +30,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.okhttp3:okhttp:3.11.0'
     compile 'com.google.code.gson:gson:2.8.5'
+    compile 'com.github.huangxiaoguo1:AlertDialog:1.1.1'
+    compile 'com.airbnb.android:lottie:2.5.5'
 }

@@ -1,6 +1,7 @@
 package tsou.cn.hxgokhttputils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.Proxy;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +23,7 @@ import tsou.cn.hxgokhttputils.bean.WsdBean;
 import tsou.cn.hxgokhttputils.interceptor.CacheInterceptor;
 import tsou.cn.lib_hxgokhttp.HxgHttpUtils;
 import tsou.cn.lib_hxgokhttp.callback.BitmapCallBack;
+import tsou.cn.lib_hxgokhttp.callback.DefaultDialogCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DefaultHttpCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DownLoadFileCallBack;
 import tsou.cn.lib_hxgokhttp.callback.StringEngineCallBack;
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .newBuilder()
                 .cache(cache)
                 .addNetworkInterceptor(new CacheInterceptor())
-             // .addInterceptor(new LogInterceptor())
+                // .addInterceptor(new LogInterceptor())
                 .addInterceptor(new LogBitmapInterceptor())
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
@@ -113,15 +116,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .addHeader("dicFlag", "wsd.grade.type")
                         .url("http://101.37.168.221/wsd/dictionary/getMapByDicflag")
                         .addParam(fields)
-                        .execeute(new DefaultHttpCallBack<WsdBean>() {
+                        .execeute(new DefaultDialogCallBack<WsdBean>() {
 
                             @Override
-                            public void onSuccess(WsdBean result) {
+                            public void onHxgSuccess(WsdBean result) {
                                 Log.e("huangxiaoguo", "result==>" + result.toString());
                             }
 
                             @Override
-                            public void onFail(Exception e) {
+                            public void onHxgFail(Exception e) {
 
                             }
                         });
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             @Override
                             public void onFail(Exception e) {
-
+                                e.printStackTrace();
                             }
                         });
                 break;
@@ -155,14 +158,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .url("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg")
                         .get()
                         .execeute(new BitmapCallBack() {
-                            @Override
-                            public void onSuccess(Bitmap bitmap) {
-                                mImage.setImageBitmap(bitmap);
-                            }
 
                             @Override
                             public void onFail(Exception e) {
 
+                            }
+
+                            @Override
+                            public void onSuccess(InputStream ios) {
+                                Bitmap bitmap = BitmapFactory.decodeStream(ios);
+                                mImage.setImageBitmap(bitmap);
                             }
                         });
                 break;

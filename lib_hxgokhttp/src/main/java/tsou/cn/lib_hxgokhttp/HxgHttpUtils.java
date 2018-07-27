@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.ArrayMap;
 
-import java.util.ArrayList;
 import java.util.Map;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import tsou.cn.lib_hxgokhttp.callback.EngineCallBack;
 
@@ -197,8 +195,15 @@ public class HxgHttpUtils {
     /**
      * 取消网络请求
      */
-    public static void callAll(){
+    public static void callAll() {
         OkHttpEngine.callAll();
+    }
+
+    /**
+     * 取消网络请求
+     */
+    public static void cancelTag(Object tag) {
+        OkHttpEngine.cancelTag(tag);
     }
 
     /**
@@ -212,9 +217,10 @@ public class HxgHttpUtils {
     }
 
     //也可以传入自己的OkHttp配置
-    public static void init(OkHttpClient okHttpClient){
+    public static void init(OkHttpClient okHttpClient) {
         OkHttpEngine.init(okHttpClient);
     }
+
     /**
      * 每次可以自带引擎
      *

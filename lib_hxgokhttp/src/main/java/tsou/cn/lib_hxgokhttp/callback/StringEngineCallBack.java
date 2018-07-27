@@ -1,5 +1,6 @@
 package tsou.cn.lib_hxgokhttp.callback;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -14,7 +15,17 @@ import okhttp3.ResponseBody;
 
 public abstract class StringEngineCallBack implements EngineCallBack {
 
-    protected static Handler mHandler=new Handler(Looper.getMainLooper());
+    protected static Handler mHandler = new Handler(Looper.getMainLooper());
+
+    @Override
+    public void onBefore(Context context) {
+
+    }
+
+    @Override
+    public void onAfter() {
+
+    }
 
     @Override
     public void onProgress(int progress) {
@@ -42,6 +53,8 @@ public abstract class StringEngineCallBack implements EngineCallBack {
         });
 
     }
+
     public abstract void onSuccess(String resultJson);
+
     public abstract void onFail(Exception e);
 }
