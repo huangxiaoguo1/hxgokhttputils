@@ -11,7 +11,7 @@ allprojects {
 }
 
 dependencies {
-	    implementation 'com.github.huangxiaoguo1:hxgokhttputils:1.0.1'
+	    implementation 'com.github.huangxiaoguo1:hxgokhttputils:1.1.3'
 }
 
 
@@ -31,17 +31,17 @@ dependencies {
                 HxgHttpUtils.with(this)
                         .get()
                         .addHeader("dicFlag", "wsd.grade.type")
-                        .url("http://******/wsd/dictionary/getMapByDicflag")
+                        .url("http://********/wsd/dictionary/getMapByDicflag")
                         .addParam(fields)
-                        .execeute(new DefaultHttpCallBack<WsdBean>() {
+                        .execeute(new DefaultDialogCallBack<WsdBean>() {
 
                             @Override
-                            public void onSuccess(WsdBean result) {
+                            public void onHxgSuccess(WsdBean result) {
                                 Log.e("huangxiaoguo", "result==>" + result.toString());
                             }
 
                             @Override
-                            public void onFail(Exception e) {
+                            public void onHxgFail(Exception e) {
 
                             }
                         });
@@ -174,6 +174,10 @@ dependencies {
     }
 
 ```
+### 默认Dialog
+
+    详细参考
+    DefaultDialogCallBack, DialogStringCallBack
 
 ### 初始化其他的引擎
 
