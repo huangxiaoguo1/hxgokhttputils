@@ -26,6 +26,6 @@ dependencies {
     })
 //    compile 'com.github.huangxiaoguo1:hxgokhttputils:1.0.1'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    compile 'com.android.support:appcompat-v7:27.1.1'
     compile project(':lib_hxgokhttp')
 }
