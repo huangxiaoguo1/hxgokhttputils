@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import tsou.cn.hxgokhttputils.bean.StudyBean;
+import tsou.cn.hxgokhttputils.bean.ConsultingListBean;
 import tsou.cn.hxgokhttputils.bean.WsdBean;
 import tsou.cn.hxgokhttputils.interceptor.CacheInterceptor;
 import tsou.cn.lib_hxgokhttp.HxgHttpUtils;
@@ -131,18 +131,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.post:
                 Map<String, Object> field = new ArrayMap<>();
-                field.put("currentPage", "1");
-                field.put("pageSize", "15");
-                field.put("indexFlag", "1");
+//                field.put("currentPage", "1");
+//                field.put("pageSize", "15");
+//                field.put("indexFlag", "1");
+//                field.put("action", "App/Lawyer/consultXq");
+//                field.put("value", "eyJpZCI6IjQxIn0=");
+                field.put("action", "App/Lawyer/consult");
+                field.put("value", "eyJwIjoiMSIsInR5cGUiOiIxIn0=");
                 HxgHttpUtils.with(this)
                         .post()
-                        .url("https://university.1035.mobi/app/course/index.do")
-                        .addHeader(field)
+//                        .url("https://university.1035.mobi/app/course/index.do")
+                        .url("http://www.huirongfa.com/App/Index/api")
+//                        .addHeader(field)
                         .addParam(field)
-                        .execeute(new DefaultHttpCallBack<StudyBean>() {
+                        .execeute(new DefaultHttpCallBack<ConsultingListBean>() {
 
                             @Override
-                            public void onSuccess(StudyBean result) {
+                            public void onSuccess(ConsultingListBean result) {
                                 Log.e("huangxiaoguo", "result==>" + result.toString());
 
                             }
@@ -150,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onFail(Exception e) {
                                 e.printStackTrace();
+                                UIUtils.showToast("服务器有误");
                             }
                         });
                 break;

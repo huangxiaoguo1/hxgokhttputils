@@ -19,15 +19,20 @@ public abstract class DefaultHttpCallBack<T> extends StringEngineCallBack {
     public abstract void onSuccess(T result);
 
 
-
     @Override
     public void onProgress(int progress) {
 
     }
+
     @Override
     public void onSuccess(String resultJson) {
-        Gson gson = new Gson();
-        T objResult = (T) gson.fromJson(resultJson, URLUtil.analysisClazzInfo(this));
-        onSuccess(objResult);
+        try {
+            Gson gson = new Gson();
+            T objResult = (T) gson.fromJson(resultJson, URLUtil.analysisClazzInfo(this));
+            onSuccess(objResult);
+        } catch (Exception e) {
+            onFail(e);
+        }
+
     }
 }
