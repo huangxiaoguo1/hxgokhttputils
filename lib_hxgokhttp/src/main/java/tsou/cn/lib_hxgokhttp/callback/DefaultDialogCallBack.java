@@ -23,7 +23,7 @@ public abstract class DefaultDialogCallBack<T> extends DefaultHttpCallBack<T> {
     @Override
     public void onAfter() {
         if (dialog != null) {
-//            dialog.dismiss();
+            dialog.dismiss();
         }
     }
 
