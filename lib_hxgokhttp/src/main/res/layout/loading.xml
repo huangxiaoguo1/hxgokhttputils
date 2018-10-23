@@ -5,10 +5,10 @@
     android:layout_height="match_parent">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="little_girl_jumping_loader.json"
+        app:lottie_fileName="glow_loading.json"
         app:lottie_loop="true" />
 </FrameLayout>

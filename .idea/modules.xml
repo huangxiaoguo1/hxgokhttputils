@@ -4,9 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Hxgokhttputils.iml" filepath="$PROJECT_DIR$/Hxgokhttputils.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hxgokhttputils.iml" filepath="$PROJECT_DIR$/hxgokhttputils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib_hxgokhttp/lib_hxgokhttp.iml" filepath="$PROJECT_DIR$/lib_hxgokhttp/lib_hxgokhttp.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_hxgokhttp/lib_hxgokhttp.iml" filepath="$PROJECT_DIR$/lib_hxgokhttp/lib_hxgokhttp.iml" />
     </modules>
   </component>
