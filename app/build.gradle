@@ -13,7 +13,11 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            // Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -24,7 +28,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-//    compile 'com.github.huangxiaoguo1:hxgokhttputils:1.1.4'
+//    compile 'com.github.huangxiaoguo1:hxgokhttputils:1.1.6'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile project(':lib_hxgokhttp')

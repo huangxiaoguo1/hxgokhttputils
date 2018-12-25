@@ -2,7 +2,7 @@ package tsou.cn.lib_hxgokhttp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.ArrayMap;
+import android.support.v4.util.ArrayMap;
 
 import java.util.Map;
 
