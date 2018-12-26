@@ -31,7 +31,7 @@ import tsou.cn.lib_hxgokhttp.interceptor.LogInterceptor;
 class OkHttpEngine implements IHttpEngine {
     private static OkHttpClient mOkHttpClient = new OkHttpClient()
             .newBuilder()
-            .addInterceptor(new LogInterceptor())
+//             .addInterceptor(new LogInterceptor())
             .connectTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
