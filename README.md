@@ -11,7 +11,7 @@ allprojects {
 }
 
 dependencies {
-	    implementation 'com.github.huangxiaoguo1:hxgokhttputils:1.1.6'
+	    implementation 'com.github.huangxiaoguo1:hxgokhttputils:1.1.9'
 }
 
 
@@ -19,8 +19,7 @@ dependencies {
 
 #### 引擎介绍
 
-    默认使用的是Okhttp引擎，当然这里我们也可以自己配置Okhttp,默认日志拦截器LogInterceptor，
-    下载图片时请重新配置Okhttp，可使用日志拦截器LogBitmapInterceptor，默认不许使用代理
+    默认使用的是Okhttp引擎，当然这里我们也可以自己配置Okhttp,默认日志拦截器LogInterceptor，默认不许使用代理、绕过证书认证
    
 ###### get请求
 ```
@@ -245,6 +244,10 @@ HxgHttpUtils.exchangeEngine(IHttpEngine httpEngine);
 ###### execeute()
 
     空回调
+    
+###### cancelTag(Object tag)
+
+    取消网络请求（tag为with(Context context)传入的上下文）
     
 ###### callAll()
 
