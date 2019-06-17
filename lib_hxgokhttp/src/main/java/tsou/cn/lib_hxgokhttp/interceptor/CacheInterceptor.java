@@ -1,5 +1,6 @@
-package tsou.cn.hxgokhttputils.interceptor;
+package tsou.cn.lib_hxgokhttp.interceptor;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -8,7 +9,7 @@ import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import tsou.cn.hxgokhttputils.NetWorkUtils;
+import tsou.cn.lib_hxgokhttp.NetWorkUtils;
 
 /**
  * Created by 黄家三少 on 2018/7/20.
@@ -16,17 +17,22 @@ import tsou.cn.hxgokhttputils.NetWorkUtils;
  */
 
 public class CacheInterceptor implements Interceptor {
+    private Context mContext;
+    public CacheInterceptor(Context context) {
+        this.mContext=context;
+    }
+
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (!NetWorkUtils.isNetworkAvailable()) {
+        if (!NetWorkUtils.isNetworkAvailable(mContext)) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
             Log.i("huangxiaoguo", "no network");
         }
         Response response = chain.proceed(request);
-        if (NetWorkUtils.isNetworkAvailable()) {
+        if (NetWorkUtils.isNetworkAvailable(mContext)) {
             int maxAge = 0 * 60; // 有网络时 设置缓存超时时间为0;
             response.newBuilder()
                     .header("Cache-Control", "public, max-age=" + maxAge)

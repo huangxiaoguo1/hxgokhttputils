@@ -196,14 +196,14 @@ public class HxgHttpUtils {
      * 取消网络请求
      */
     public static void callAll() {
-        OkHttpEngine.callAll();
+        mHttpEngine.callAll();
     }
 
     /**
      * 取消网络请求
      */
     public static void cancelTag(Object tag) {
-        OkHttpEngine.cancelTag(tag);
+        mHttpEngine.cancelTag(tag);
     }
 
     /**

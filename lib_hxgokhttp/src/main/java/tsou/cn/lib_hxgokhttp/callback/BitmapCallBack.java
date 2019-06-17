@@ -1,6 +1,8 @@
 package tsou.cn.lib_hxgokhttp.callback;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -47,14 +49,15 @@ public abstract class BitmapCallBack implements EngineCallBack {
     @Override
     public void onSuccess(ResponseBody result) throws IOException {
         final InputStream is = result.byteStream();
+        final Bitmap bitmap = BitmapFactory.decodeStream(is);
+        is.close();
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                onSuccess(is);
+                onSuccess(bitmap);
             }
         });
-        is.close();
     }
 
-    public abstract void onSuccess(InputStream ios);
+    public abstract void onSuccess(Bitmap ios);
 }

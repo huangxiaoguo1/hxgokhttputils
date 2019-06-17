@@ -19,6 +19,15 @@ public class ConsultingListBean {
     private String msg;
     private List<DataBean> data;
 
+    @Override
+    public String toString() {
+        return "ConsultingListBean{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
     public int getStatus() {
         return status;
     }

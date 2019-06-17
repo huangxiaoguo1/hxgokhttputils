@@ -20,8 +20,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import tsou.cn.lib_hxgokhttp.callback.BitmapCallBack;
+import tsou.cn.lib_hxgokhttp.callback.DownLoadFileCallBack;
 import tsou.cn.lib_hxgokhttp.callback.EngineCallBack;
+import tsou.cn.lib_hxgokhttp.interceptor.CacheInterceptor;
+import tsou.cn.lib_hxgokhttp.interceptor.LogBitmapInterceptor;
 import tsou.cn.lib_hxgokhttp.interceptor.LogInterceptor;
+import tsou.cn.lib_hxgokhttp.manager.TrustAllCerts;
 
 /**
  * Created by Administrator on 2018/7/19 0019.
@@ -29,17 +34,48 @@ import tsou.cn.lib_hxgokhttp.interceptor.LogInterceptor;
  */
 
 class OkHttpEngine implements IHttpEngine {
-    private static OkHttpClient mOkHttpClient = new OkHttpClient()
+
+    private static OkHttpClient mOkHttpDefaultClient = new OkHttpClient()
             .newBuilder()
-//             .addInterceptor(new LogInterceptor())
+            .sslSocketFactory(TrustAllCerts.createSSLSocketFactory())
+            .hostnameVerifier(new TrustAllCerts.TrustAllHostnameVerifier())
+            .addInterceptor(new LogInterceptor())
             .connectTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .pingInterval(20, TimeUnit.SECONDS)
             .proxy(Proxy.NO_PROXY)
             .build();
+    private static OkHttpClient mOkHttpDownClient = new OkHttpClient()
+            .newBuilder()
+            .sslSocketFactory(TrustAllCerts.createSSLSocketFactory())
+            .hostnameVerifier(new TrustAllCerts.TrustAllHostnameVerifier())
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(new LogBitmapInterceptor())
+            .writeTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .pingInterval(20, TimeUnit.SECONDS)
+            .proxy(Proxy.NO_PROXY)
+            .build();
 
-    public static void cancelTag(Object tag) {
+    private static OkHttpClient mOkHttpClient = mOkHttpDefaultClient;
+
+    private static boolean mFlog = false;
+
+    public void setOkHttpClient(EngineCallBack engineCallBack) {
+
+        if (mFlog) {
+            return;
+        }
+        if (engineCallBack instanceof DownLoadFileCallBack || engineCallBack instanceof BitmapCallBack) {
+            mOkHttpClient = mOkHttpDownClient;
+        } else {
+            mOkHttpClient = mOkHttpDefaultClient;
+        }
+
+    }
+
+    public void cancelTag(Object tag) {
         for (Call call : mOkHttpClient.dispatcher().queuedCalls()) {
             if (tag.equals(call.request().tag())) {
                 call.cancel();
@@ -52,17 +88,20 @@ class OkHttpEngine implements IHttpEngine {
         }
     }
 
-    public static void callAll() {
+    public void callAll() {
         mOkHttpClient.dispatcher().cancelAll();
     }
 
+
     public static void init(OkHttpClient okHttpClient) {
+        mFlog = true;
         mOkHttpClient = okHttpClient;
     }
 
     @Override
     public void get(Context context, String url, Map<String, Object> header,
                     Map<String, Object> params, final EngineCallBack callBack) {
+        setOkHttpClient(callBack);
         String jointUrl = URLUtil.jointParams(url, params);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(jointUrl)
@@ -93,6 +132,7 @@ class OkHttpEngine implements IHttpEngine {
     @Override
     public void post(Context context, String url, Map<String, Object> header, Map<String, Object> params,
                      final EngineCallBack callBack) {
+        setOkHttpClient(callBack);
         RequestBody requestBody = appendBody(params);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
@@ -126,6 +166,7 @@ class OkHttpEngine implements IHttpEngine {
 
     @Override
     public void put(Context context, String url, Map<String, Object> header, Map<String, Object> params, final EngineCallBack callBack) {
+        setOkHttpClient(callBack);
         RequestBody requestBody = appendBody(params);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
@@ -159,6 +200,7 @@ class OkHttpEngine implements IHttpEngine {
 
     @Override
     public void delete(Context context, String url, Map<String, Object> header, Map<String, Object> params, final EngineCallBack callBack) {
+        setOkHttpClient(callBack);
         RequestBody requestBody = appendBody(params);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
@@ -192,6 +234,7 @@ class OkHttpEngine implements IHttpEngine {
 
     @Override
     public void post(Context context, String url, Map<String, Object> header, String json, final EngineCallBack callBack) {
+        setOkHttpClient(callBack);
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
         RequestBody requestBody = RequestBody.create(mediaType, json);
         Request.Builder requestBuilder = new Request.Builder()
@@ -224,6 +267,7 @@ class OkHttpEngine implements IHttpEngine {
 
     @Override
     public void put(Context context, String url, Map<String, Object> header, String json, final EngineCallBack callBack) {
+        setOkHttpClient(callBack);
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
         RequestBody requestBody = RequestBody.create(mediaType, json);
         Request.Builder requestBuilder = new Request.Builder()
@@ -256,6 +300,7 @@ class OkHttpEngine implements IHttpEngine {
 
     @Override
     public void delete(Context context, String url, Map<String, Object> header, String json, final EngineCallBack callBack) {
+        setOkHttpClient(callBack);
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
         RequestBody requestBody = RequestBody.create(mediaType, json);
         Request.Builder requestBuilder = new Request.Builder()

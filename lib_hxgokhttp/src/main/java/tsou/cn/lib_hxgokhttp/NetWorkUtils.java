@@ -1,4 +1,4 @@
-package tsou.cn.hxgokhttputils;
+package tsou.cn.lib_hxgokhttp;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -9,8 +9,8 @@ import android.net.NetworkInfo;
  */
 
 public class NetWorkUtils {
-    public static boolean isNetworkAvailable() {
-        ConnectivityManager manager = (ConnectivityManager) UIUtils.getContext()
+    public static boolean isNetworkAvailable( Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         if (manager == null) {
             return false;

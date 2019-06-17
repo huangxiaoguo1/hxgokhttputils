@@ -12,6 +12,10 @@ import tsou.cn.lib_hxgokhttp.callback.EngineCallBack;
  */
 
 public interface IHttpEngine {
+    void callAll();
+
+    void cancelTag(Object tag);
+
     /**
      * get请求
      */
@@ -47,6 +51,7 @@ public interface IHttpEngine {
      * json
      */
     void delete(Context context,String url,Map<String, Object> header,String json, EngineCallBack callBack);
+
 
 
     /**
