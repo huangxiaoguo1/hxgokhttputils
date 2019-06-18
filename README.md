@@ -11,7 +11,7 @@ allprojects {
 }
 
 dependencies {
-	    implementation 'com.github.huangxiaoguo1:hxgokhttputils:1.1.9'
+	    implementation 'com.github.huangxiaoguo1:hxgokhttputils:1.2.1'
 }
 
 
