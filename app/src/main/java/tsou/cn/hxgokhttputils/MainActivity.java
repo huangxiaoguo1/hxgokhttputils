@@ -83,15 +83,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Cache cache = new Cache(httpCacheDir, 10 * 1024 * 1024);
         OkHttpClient mOkHttpClient = new OkHttpClient()
                 .newBuilder()
-                .cache(cache)
-                .addNetworkInterceptor(new CacheInterceptor(UIUtils.getContext()))
-//                 .addInterceptor(new LogInterceptor())
-                .addInterceptor(new LogBitmapInterceptor())
+//                .cache(cache)
+//                .addNetworkInterceptor(new CacheInterceptor(UIUtils.getContext()))
+                 .addInterceptor(new LogInterceptor())
+//                .addInterceptor(new LogBitmapInterceptor())
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .pingInterval(20, TimeUnit.SECONDS)
-                .proxy(Proxy.NO_PROXY)
+//                .proxy(Proxy.NO_PROXY)
                 .build();
 //        HxgHttpUtils.init(mOkHttpClient);
     }
