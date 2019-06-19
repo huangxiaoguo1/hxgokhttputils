@@ -24,15 +24,17 @@ public class HxgHttpUtils {
     private static final int DELETE_TYPE = 0x1111;
     private volatile Map<String, Object> mParams;
     private volatile Map<String, Object> mHeader;
-    private static String stringJson;
+    private static String stringJsonOrXml;
+    private static IHttpEngine.TypeEnum mMediaType = IHttpEngine.TypeEnum.FORM;
     private Context mContext;
+
 
     @SuppressLint("NewApi")
     private HxgHttpUtils(Context context) {
         this.mContext = context;
         mParams = new ArrayMap<>();
         mHeader = new ArrayMap<>();
-        stringJson = "";
+        stringJsonOrXml = "";
     }
 
     /**
@@ -144,11 +146,22 @@ public class HxgHttpUtils {
     /**
      * json方式提交
      *
-     * @param json
+     * @param jsonOrXml
      * @return
      */
-    public HxgHttpUtils addJson(String json) {
-        stringJson = json;
+    public HxgHttpUtils addJsonOrXml(String jsonOrXml) {
+        stringJsonOrXml = jsonOrXml;
+        return this;
+    }
+
+    /**
+     * json方式提交
+     *
+     * @param mediaType
+     * @return
+     */
+    public HxgHttpUtils addMediaType(IHttpEngine.TypeEnum mediaType) {
+        mMediaType = mediaType;
         return this;
     }
 
@@ -164,27 +177,27 @@ public class HxgHttpUtils {
 
         if (mType == POST_TYPE) {
             if (mParams.isEmpty()) {
-                post(mUrl, mHeader, stringJson, callBack);
+                post(mUrl, mHeader, stringJsonOrXml, mMediaType,callBack);
                 return;
             }
-            post(mUrl, mHeader, mParams, callBack);
+            post(mUrl, mHeader, mParams,mMediaType, callBack);
         }
         if (mType == GET_TYPE) {
-            get(mUrl, mHeader, mParams, callBack);
+            get(mUrl, mHeader, mParams,callBack);
         }
         if (mType == PUT_TYPE) {
             if (mParams.isEmpty()) {
-                put(mUrl, mHeader, stringJson, callBack);
+                put(mUrl, mHeader, stringJsonOrXml, mMediaType,callBack);
                 return;
             }
-            put(mUrl, mHeader, mParams, callBack);
+            put(mUrl, mHeader, mParams, mMediaType,callBack);
         }
         if (mType == DELETE_TYPE) {
             if (mParams.isEmpty()) {
-                delete(mUrl, mHeader, stringJson, callBack);
+                delete(mUrl, mHeader, stringJsonOrXml, mMediaType,callBack);
                 return;
             }
-            delete(mUrl, mHeader, mParams, callBack);
+            delete(mUrl, mHeader, mParams, mMediaType,callBack);
         }
     }
 
@@ -231,32 +244,32 @@ public class HxgHttpUtils {
         return this;
     }
 
-    private void get(String url, Map<String, Object> header, Map<String, Object> params, EngineCallBack callBack) {
-        mHttpEngine.get(mContext, url, header, params, callBack);
+    private void get(String url, Map<String, Object> header, Map<String, Object> params,  EngineCallBack callBack) {
+        mHttpEngine.get(mContext, url, header, params,callBack);
     }
 
-    private void post(String url, Map<String, Object> header, Map<String, Object> params, EngineCallBack callBack) {
-        mHttpEngine.post(mContext, url, header, params, callBack);
+    private void post(String url, Map<String, Object> header, Map<String, Object> params, IHttpEngine.TypeEnum mediaType, EngineCallBack callBack) {
+        mHttpEngine.post(mContext, url, header, params,mediaType, callBack);
     }
 
-    private void put(String url, Map<String, Object> header, Map<String, Object> params, EngineCallBack callBack) {
-        mHttpEngine.put(mContext, url, header, params, callBack);
+    private void put(String url, Map<String, Object> header, Map<String, Object> params, IHttpEngine.TypeEnum mediaType, EngineCallBack callBack) {
+        mHttpEngine.put(mContext, url, header, params,mediaType, callBack);
     }
 
-    private void delete(String url, Map<String, Object> header, Map<String, Object> params, EngineCallBack callBack) {
-        mHttpEngine.delete(mContext, url, header, params, callBack);
+    private void delete(String url, Map<String, Object> header, Map<String, Object> params, IHttpEngine.TypeEnum mediaType, EngineCallBack callBack) {
+        mHttpEngine.delete(mContext, url, header, params,mediaType, callBack);
     }
 
-    private void post(String url, Map<String, Object> header, String json, EngineCallBack callBack) {
-        mHttpEngine.post(mContext, url, header, json, callBack);
+    private void post(String url, Map<String, Object> header, String stringJsonOrXml, IHttpEngine.TypeEnum mediaType, EngineCallBack callBack) {
+        mHttpEngine.post(mContext, url, header, stringJsonOrXml,mediaType, callBack);
     }
 
-    private void put(String url, Map<String, Object> header, String json, EngineCallBack callBack) {
-        mHttpEngine.put(mContext, url, header, json, callBack);
+    private void put(String url, Map<String, Object> header, String stringJsonOrXml, IHttpEngine.TypeEnum mediaType, EngineCallBack callBack) {
+        mHttpEngine.put(mContext, url, header, stringJsonOrXml,mediaType, callBack);
     }
 
-    private void delete(String url, Map<String, Object> header, String json, EngineCallBack callBack) {
-        mHttpEngine.delete(mContext, url, header, json, callBack);
+    private void delete(String url, Map<String, Object> header, String stringJsonOrXml, IHttpEngine.TypeEnum mediaType, EngineCallBack callBack) {
+        mHttpEngine.delete(mContext, url, header, stringJsonOrXml, mediaType,callBack);
     }
 }
 

@@ -12,6 +12,16 @@ import tsou.cn.lib_hxgokhttp.callback.EngineCallBack;
  */
 
 public interface IHttpEngine {
+     enum TypeEnum {
+        XML,
+        JSON,
+        URLENCODED,
+        MIXED,
+        ALTERNATIVE,
+        DIGEST,
+        PARALLEL,
+        FORM
+    }
     void callAll();
 
     void cancelTag(Object tag);
@@ -25,32 +35,32 @@ public interface IHttpEngine {
      * post请求
      * 可传递文件
      */
-    void post(Context context,String url,Map<String, Object> header, Map<String, Object> params, EngineCallBack callBack);
+    void post(Context context,String url,Map<String, Object> header, Map<String, Object> params, TypeEnum mediaType,EngineCallBack callBack);
     /**
      * put请求
      * 可传递文件
      */
-    void put(Context context,String url,Map<String, Object> header, Map<String, Object> params, EngineCallBack callBack);
+    void put(Context context,String url,Map<String, Object> header, Map<String, Object> params,TypeEnum mediaType, EngineCallBack callBack);
     /**
      * delete请求
      * 可传递文件
      */
-    void delete(Context context,String url,Map<String, Object> header, Map<String, Object> params, EngineCallBack callBack);
+    void delete(Context context,String url,Map<String, Object> header, Map<String, Object> params,TypeEnum mediaType, EngineCallBack callBack);
     /**
      * post请求
      * json
      */
-    void post(Context context,String url,Map<String, Object> header, String json, EngineCallBack callBack);
+    void post(Context context,String url,Map<String, Object> header, String stringJsonOrXml, TypeEnum mediaType,EngineCallBack callBack);
     /**
      * put请求
      * json
      */
-    void put(Context context,String url,Map<String, Object> header,String json, EngineCallBack callBack);
+    void put(Context context,String url,Map<String, Object> header,String stringJsonOrXml,TypeEnum mediaType, EngineCallBack callBack);
     /**
      * delete请求
      * json
      */
-    void delete(Context context,String url,Map<String, Object> header,String json, EngineCallBack callBack);
+    void delete(Context context,String url,Map<String, Object> header,String stringJsonOrXml, TypeEnum mediaType,EngineCallBack callBack);
 
 
 

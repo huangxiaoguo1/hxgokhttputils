@@ -27,6 +27,7 @@ import okhttp3.OkHttpClient;
 import tsou.cn.hxgokhttputils.bean.ConsultingListBean;
 import tsou.cn.hxgokhttputils.bean.WsdBean;
 import tsou.cn.lib_hxgokhttp.HxgHttpUtils;
+import tsou.cn.lib_hxgokhttp.IHttpEngine;
 import tsou.cn.lib_hxgokhttp.callback.BitmapCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DefaultDialogCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DefaultHttpCallBack;

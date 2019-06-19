@@ -1,6 +1,7 @@
 package tsou.cn.lib_hxgokhttp;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +36,7 @@ import tsou.cn.lib_hxgokhttp.manager.TrustAllCerts;
 
 class OkHttpEngine implements IHttpEngine {
 
+
     private static OkHttpClient mOkHttpDefaultClient = new OkHttpClient()
             .newBuilder()
             .sslSocketFactory(TrustAllCerts.createSSLSocketFactory())
@@ -63,7 +65,6 @@ class OkHttpEngine implements IHttpEngine {
     private static boolean mFlog = false;
 
     public void setOkHttpClient(EngineCallBack engineCallBack) {
-
         if (mFlog) {
             return;
         }
@@ -130,10 +131,10 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void post(Context context, String url, Map<String, Object> header, Map<String, Object> params,
+    public void post(Context context, String url, Map<String, Object> header, Map<String, Object> params,TypeEnum mediaType,
                      final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        RequestBody requestBody = appendBody(params);
+        RequestBody requestBody = appendBody(params,mediaType);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -165,9 +166,9 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void put(Context context, String url, Map<String, Object> header, Map<String, Object> params, final EngineCallBack callBack) {
+    public void put(Context context, String url, Map<String, Object> header, Map<String, Object> params,TypeEnum mediaType, final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        RequestBody requestBody = appendBody(params);
+        RequestBody requestBody = appendBody(params,mediaType);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -199,9 +200,9 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void delete(Context context, String url, Map<String, Object> header, Map<String, Object> params, final EngineCallBack callBack) {
+    public void delete(Context context, String url, Map<String, Object> header, Map<String, Object> params, TypeEnum mediaType,final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        RequestBody requestBody = appendBody(params);
+        RequestBody requestBody = appendBody(params,mediaType);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -233,10 +234,10 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void post(Context context, String url, Map<String, Object> header, String json, final EngineCallBack callBack) {
+    public void post(Context context, String url, Map<String, Object> header, String stringJsonOrXml,TypeEnum media, final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
-        RequestBody requestBody = RequestBody.create(mediaType, json);
+        MediaType mediaType = MediaType.parse(getTypeEnum(media));//"类型,字节码"
+        RequestBody requestBody = RequestBody.create(mediaType, stringJsonOrXml);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -266,10 +267,10 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void put(Context context, String url, Map<String, Object> header, String json, final EngineCallBack callBack) {
+    public void put(Context context, String url, Map<String, Object> header, String stringJsonOrXml, TypeEnum media,final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
-        RequestBody requestBody = RequestBody.create(mediaType, json);
+        MediaType mediaType = MediaType.parse(getTypeEnum(media));//"类型,字节码"
+        RequestBody requestBody = RequestBody.create(mediaType, stringJsonOrXml);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -299,10 +300,10 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void delete(Context context, String url, Map<String, Object> header, String json, final EngineCallBack callBack) {
+    public void delete(Context context, String url, Map<String, Object> header, String stringJsonOrXml,TypeEnum media, final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
-        RequestBody requestBody = RequestBody.create(mediaType, json);
+        MediaType mediaType = MediaType.parse(getTypeEnum(media));//"类型,字节码"
+        RequestBody requestBody = RequestBody.create(mediaType, stringJsonOrXml);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -337,9 +338,9 @@ class OkHttpEngine implements IHttpEngine {
      * @param params
      * @return
      */
-    private RequestBody appendBody(Map<String, Object> params) {
+    private RequestBody appendBody(Map<String, Object> params,TypeEnum mediaType) {
         MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
+                .setType(getMediaType(mediaType));
         addParams(builder, params);
         return builder.build();
     }
@@ -389,7 +390,32 @@ class OkHttpEngine implements IHttpEngine {
         return contentTypeFor;
     }
 
-
+    private String getTypeEnum(TypeEnum typeEnum){
+        switch (typeEnum){
+            case XML:
+                return "application/xml; charset=utf-8";
+            case JSON:
+                return "application/json; charset=utf-8";
+            case URLENCODED:
+                return "application/x-www-form-urlencoded;charset=utf-8";
+        }
+        return "application/json; charset=utf-8";
+    }
+    private MediaType getMediaType(TypeEnum typeEnum){
+        switch (typeEnum){
+            case MIXED:
+                return MultipartBody.MIXED;
+            case ALTERNATIVE:
+                return MultipartBody.ALTERNATIVE;
+            case DIGEST:
+                return MultipartBody.DIGEST;
+            case PARALLEL:
+                return MultipartBody.PARALLEL;
+            case FORM:
+                return MultipartBody.FORM;
+        }
+        return MultipartBody.FORM;
+    }
 }
 
 

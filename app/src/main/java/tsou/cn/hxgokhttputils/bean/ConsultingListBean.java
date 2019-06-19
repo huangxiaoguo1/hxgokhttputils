@@ -81,6 +81,24 @@ public class ConsultingListBean {
         private String city;
         private String cate_name;
 
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "id='" + id + '\'' +
+                    ", content='" + content + '\'' +
+                    ", reply_count='" + reply_count + '\'' +
+                    ", money='" + money + '\'' +
+                    ", type='" + type + '\'' +
+                    ", create_time='" + create_time + '\'' +
+                    ", status='" + status + '\'' +
+                    ", name='" + name + '\'' +
+                    ", avatar='" + avatar + '\'' +
+                    ", province='" + province + '\'' +
+                    ", city='" + city + '\'' +
+                    ", cate_name='" + cate_name + '\'' +
+                    '}';
+        }
+
         public String getId() {
             return id;
         }
