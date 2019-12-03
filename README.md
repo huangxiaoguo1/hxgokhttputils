@@ -11,7 +11,7 @@ allprojects {
 }
 
 dependencies {
-	    implementation 'com.github.huangxiaoguo1:hxgokhttputils:1.2.3'
+	    implementation 'com.github.huangxiaoguo1:hxgokhttputils:1.2.4'
 }
 
 
@@ -105,7 +105,7 @@ dependencies {
                  HxgHttpUtils.with(this)
                          .url(url)
                          .get()
-                         .execeute(new DownLoadFileCallBack(url) {
+                         .execeute(new DownLoadFileCallBack(url,"huangxiaoguo") {
                              @Override
                              public void onSuccess(String path) {
                                  Log.e("huangxiaoguo", "下载完成==》" + path);
