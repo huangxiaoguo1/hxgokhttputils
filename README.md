@@ -160,6 +160,8 @@ dependencies {
         OkHttpClient mOkHttpClient = new OkHttpClient()
                 .newBuilder()
                 .cache(cache)
+                .sslSocketFactory(TrustAllCerts.createSSLSocketFactory())
+                .hostnameVerifier(new TrustAllCerts.TrustAllHostnameVerifier())
                 .addNetworkInterceptor(new CacheInterceptor())
              // .addInterceptor(new LogInterceptor())
                 .addInterceptor(new LogBitmapInterceptor())

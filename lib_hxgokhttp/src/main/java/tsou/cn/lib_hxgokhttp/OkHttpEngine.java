@@ -1,12 +1,10 @@
 package tsou.cn.lib_hxgokhttp;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
-import java.net.Proxy;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +22,8 @@ import okhttp3.ResponseBody;
 import tsou.cn.lib_hxgokhttp.callback.BitmapCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DownLoadFileCallBack;
 import tsou.cn.lib_hxgokhttp.callback.EngineCallBack;
-import tsou.cn.lib_hxgokhttp.interceptor.CacheInterceptor;
 import tsou.cn.lib_hxgokhttp.interceptor.LogBitmapInterceptor;
 import tsou.cn.lib_hxgokhttp.interceptor.LogInterceptor;
-import tsou.cn.lib_hxgokhttp.manager.TrustAllCerts;
 
 /**
  * Created by Administrator on 2018/7/19 0019.
@@ -39,25 +35,19 @@ class OkHttpEngine implements IHttpEngine {
 
     private static OkHttpClient mOkHttpDefaultClient = new OkHttpClient()
             .newBuilder()
-            .sslSocketFactory(TrustAllCerts.createSSLSocketFactory())
-            .hostnameVerifier(new TrustAllCerts.TrustAllHostnameVerifier())
             .addInterceptor(new LogInterceptor())
             .connectTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .pingInterval(20, TimeUnit.SECONDS)
-            .proxy(Proxy.NO_PROXY)
             .build();
     private static OkHttpClient mOkHttpDownClient = new OkHttpClient()
             .newBuilder()
-            .sslSocketFactory(TrustAllCerts.createSSLSocketFactory())
-            .hostnameVerifier(new TrustAllCerts.TrustAllHostnameVerifier())
             .connectTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(new LogBitmapInterceptor())
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .pingInterval(20, TimeUnit.SECONDS)
-            .proxy(Proxy.NO_PROXY)
             .build();
 
     private static OkHttpClient mOkHttpClient = mOkHttpDefaultClient;
@@ -131,10 +121,10 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void post(Context context, String url, Map<String, Object> header, Map<String, Object> params,TypeEnum mediaType,
+    public void post(Context context, String url, Map<String, Object> header, Map<String, Object> params, TypeEnum mediaType,
                      final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        RequestBody requestBody = appendBody(params,mediaType);
+        RequestBody requestBody = appendBody(params, mediaType);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -166,9 +156,9 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void put(Context context, String url, Map<String, Object> header, Map<String, Object> params,TypeEnum mediaType, final EngineCallBack callBack) {
+    public void put(Context context, String url, Map<String, Object> header, Map<String, Object> params, TypeEnum mediaType, final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        RequestBody requestBody = appendBody(params,mediaType);
+        RequestBody requestBody = appendBody(params, mediaType);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -200,9 +190,9 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void delete(Context context, String url, Map<String, Object> header, Map<String, Object> params, TypeEnum mediaType,final EngineCallBack callBack) {
+    public void delete(Context context, String url, Map<String, Object> header, Map<String, Object> params, TypeEnum mediaType, final EngineCallBack callBack) {
         setOkHttpClient(callBack);
-        RequestBody requestBody = appendBody(params,mediaType);
+        RequestBody requestBody = appendBody(params, mediaType);
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
                 .tag(context);
@@ -234,7 +224,7 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void post(Context context, String url, Map<String, Object> header, String stringJsonOrXml,TypeEnum media, final EngineCallBack callBack) {
+    public void post(Context context, String url, Map<String, Object> header, String stringJsonOrXml, TypeEnum media, final EngineCallBack callBack) {
         setOkHttpClient(callBack);
         MediaType mediaType = MediaType.parse(getTypeEnum(media));//"类型,字节码"
         RequestBody requestBody = RequestBody.create(mediaType, stringJsonOrXml);
@@ -267,7 +257,7 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void put(Context context, String url, Map<String, Object> header, String stringJsonOrXml, TypeEnum media,final EngineCallBack callBack) {
+    public void put(Context context, String url, Map<String, Object> header, String stringJsonOrXml, TypeEnum media, final EngineCallBack callBack) {
         setOkHttpClient(callBack);
         MediaType mediaType = MediaType.parse(getTypeEnum(media));//"类型,字节码"
         RequestBody requestBody = RequestBody.create(mediaType, stringJsonOrXml);
@@ -300,7 +290,7 @@ class OkHttpEngine implements IHttpEngine {
     }
 
     @Override
-    public void delete(Context context, String url, Map<String, Object> header, String stringJsonOrXml,TypeEnum media, final EngineCallBack callBack) {
+    public void delete(Context context, String url, Map<String, Object> header, String stringJsonOrXml, TypeEnum media, final EngineCallBack callBack) {
         setOkHttpClient(callBack);
         MediaType mediaType = MediaType.parse(getTypeEnum(media));//"类型,字节码"
         RequestBody requestBody = RequestBody.create(mediaType, stringJsonOrXml);
@@ -338,7 +328,7 @@ class OkHttpEngine implements IHttpEngine {
      * @param params
      * @return
      */
-    private RequestBody appendBody(Map<String, Object> params,TypeEnum mediaType) {
+    private RequestBody appendBody(Map<String, Object> params, TypeEnum mediaType) {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(getMediaType(mediaType));
         addParams(builder, params);
@@ -390,8 +380,8 @@ class OkHttpEngine implements IHttpEngine {
         return contentTypeFor;
     }
 
-    private String getTypeEnum(TypeEnum typeEnum){
-        switch (typeEnum){
+    private String getTypeEnum(TypeEnum typeEnum) {
+        switch (typeEnum) {
             case XML:
                 return "application/xml; charset=utf-8";
             case JSON:
@@ -401,8 +391,9 @@ class OkHttpEngine implements IHttpEngine {
         }
         return "application/json; charset=utf-8";
     }
-    private MediaType getMediaType(TypeEnum typeEnum){
-        switch (typeEnum){
+
+    private MediaType getMediaType(TypeEnum typeEnum) {
+        switch (typeEnum) {
             case MIXED:
                 return MultipartBody.MIXED;
             case ALTERNATIVE:

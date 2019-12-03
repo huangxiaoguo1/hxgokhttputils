@@ -1,7 +1,6 @@
 package tsou.cn.lib_hxgokhttp.interceptor;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -10,6 +9,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import tsou.cn.lib_hxgokhttp.NetWorkUtils;
+import tsou.cn.lib_hxgokhttp.application.HxgLogUtil;
 
 /**
  * Created by 黄家三少 on 2018/7/20.
@@ -18,8 +18,9 @@ import tsou.cn.lib_hxgokhttp.NetWorkUtils;
 
 public class CacheInterceptor implements Interceptor {
     private Context mContext;
+
     public CacheInterceptor(Context context) {
-        this.mContext=context;
+        this.mContext = context;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class CacheInterceptor implements Interceptor {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
-            Log.i("huangxiaoguo", "no network");
+            HxgLogUtil.i("no network");
         }
         Response response = chain.proceed(request);
         if (NetWorkUtils.isNetworkAvailable(mContext)) {
@@ -40,7 +41,7 @@ public class CacheInterceptor implements Interceptor {
                     .build();
         } else {
             int maxStale = 60 * 60 * 24; // 无网络时，设置超时为1天
-            Log.i("huangxiaoguo", "has maxStale=" + maxStale);
+            HxgLogUtil.i("has maxStale=" + maxStale);
             response.newBuilder()
                     .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
                     .removeHeader("Pragma")

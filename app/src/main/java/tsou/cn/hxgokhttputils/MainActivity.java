@@ -1,7 +1,6 @@
 package tsou.cn.hxgokhttputils;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
@@ -10,15 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.Proxy;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -27,14 +18,11 @@ import okhttp3.OkHttpClient;
 import tsou.cn.hxgokhttputils.bean.ConsultingListBean;
 import tsou.cn.hxgokhttputils.bean.WsdBean;
 import tsou.cn.lib_hxgokhttp.HxgHttpUtils;
-import tsou.cn.lib_hxgokhttp.IHttpEngine;
 import tsou.cn.lib_hxgokhttp.callback.BitmapCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DefaultDialogCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DefaultHttpCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DownLoadFileCallBack;
 import tsou.cn.lib_hxgokhttp.callback.StringEngineCallBack;
-import tsou.cn.lib_hxgokhttp.interceptor.CacheInterceptor;
-import tsou.cn.lib_hxgokhttp.interceptor.LogBitmapInterceptor;
 import tsou.cn.lib_hxgokhttp.interceptor.LogInterceptor;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -86,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .newBuilder()
 //                .cache(cache)
 //                .addNetworkInterceptor(new CacheInterceptor(UIUtils.getContext()))
-                 .addInterceptor(new LogInterceptor())
+                .addInterceptor(new LogInterceptor())
 //                .addInterceptor(new LogBitmapInterceptor())
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
@@ -190,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 HxgHttpUtils.with(this)
                         .url(url)
                         .get()
-                        .execeute(new DownLoadFileCallBack(url) {
+                        .execeute(new DownLoadFileCallBack(url,"huangxiaoguo") {
                             @Override
                             public void onSuccess(String path) {
                                 Log.e("huangxiaoguo", "下载完成==》" + path);

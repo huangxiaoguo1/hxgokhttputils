@@ -20,6 +20,7 @@ import okhttp3.ResponseBody;
 public abstract class DownLoadFileCallBack implements EngineCallBack {
     protected static Handler mHandler = new Handler(Looper.getMainLooper());
     private String mUrl;
+    private String mOutPath;
 
     @Override
     public void onBefore(Context context) {
@@ -31,8 +32,9 @@ public abstract class DownLoadFileCallBack implements EngineCallBack {
 
     }
 
-    public DownLoadFileCallBack(String url) {
+    public DownLoadFileCallBack(String url, String outPath) {
         this.mUrl = url;
+        this.mOutPath = outPath;
     }
 
     @Override
@@ -50,15 +52,15 @@ public abstract class DownLoadFileCallBack implements EngineCallBack {
     public abstract void onSuccess(String path);
 
     @Override
-    public void onSuccess(ResponseBody result) throws IOException {
+    public void onSuccess(ResponseBody result) {
 
         InputStream is = null;
         byte[] buf = new byte[2048];
         int len = 0;
         FileOutputStream fos = null;
         // 储存下载文件的目录
-        String savePath = isExistDir("huangxiaoguo");
         try {
+            String savePath = isExistDir(mOutPath);
             is = result.byteStream();
             long total = result.contentLength();
             final File file = new File(savePath, getNameFromUrl());
