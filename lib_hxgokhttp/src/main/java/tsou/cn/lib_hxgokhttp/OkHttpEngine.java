@@ -24,6 +24,7 @@ import tsou.cn.lib_hxgokhttp.callback.DownLoadFileCallBack;
 import tsou.cn.lib_hxgokhttp.callback.EngineCallBack;
 import tsou.cn.lib_hxgokhttp.interceptor.LogBitmapInterceptor;
 import tsou.cn.lib_hxgokhttp.interceptor.LogInterceptor;
+import tsou.cn.lib_hxgokhttp.interceptor.NetInterceptor;
 
 /**
  * Created by Administrator on 2018/7/19 0019.
@@ -35,6 +36,7 @@ class OkHttpEngine implements IHttpEngine {
 
     private static OkHttpClient mOkHttpDefaultClient = new OkHttpClient()
             .newBuilder()
+            .addNetworkInterceptor(new NetInterceptor())
             .addInterceptor(new LogInterceptor())
             .connectTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
@@ -44,6 +46,7 @@ class OkHttpEngine implements IHttpEngine {
     private static OkHttpClient mOkHttpDownClient = new OkHttpClient()
             .newBuilder()
             .connectTimeout(15, TimeUnit.SECONDS)
+            .addNetworkInterceptor(new NetInterceptor())
             .addInterceptor(new LogBitmapInterceptor())
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)

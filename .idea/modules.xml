@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib_hxgokhttp/com.github.huangxiaoguo1-lib_hxgokhttp.iml" filepath="$PROJECT_DIR$/.idea/modules/lib_hxgokhttp/com.github.huangxiaoguo1-lib_hxgokhttp.iml" group="hxgokhttputils/lib_hxgokhttp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/demo-hxgokhttputils.iml" filepath="$PROJECT_DIR$/.idea/modules/demo-hxgokhttputils.iml" group="hxgokhttputils" />
       <module fileurl="file://$PROJECT_DIR$/hxgokhttputils.iml" filepath="$PROJECT_DIR$/hxgokhttputils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hxgokhttputils.iml" filepath="$PROJECT_DIR$/hxgokhttputils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib_hxgokhttp/lib_hxgokhttp.iml" filepath="$PROJECT_DIR$/lib_hxgokhttp/lib_hxgokhttp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/hxgokhttputils-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/hxgokhttputils-app.iml" group="hxgokhttputils/app" />
       <module fileurl="file://$PROJECT_DIR$/lib_hxgokhttp/lib_hxgokhttp.iml" filepath="$PROJECT_DIR$/lib_hxgokhttp/lib_hxgokhttp.iml" />
     </modules>
   </component>
