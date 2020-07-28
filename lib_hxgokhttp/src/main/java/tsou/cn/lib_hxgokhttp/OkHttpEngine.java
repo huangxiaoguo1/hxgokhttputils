@@ -38,19 +38,19 @@ class OkHttpEngine implements IHttpEngine {
             .newBuilder()
             .addNetworkInterceptor(new NetInterceptor())
             .addInterceptor(new LogInterceptor())
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .pingInterval(20, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .pingInterval(60, TimeUnit.SECONDS)
             .build();
     private static OkHttpClient mOkHttpDownClient = new OkHttpClient()
             .newBuilder()
-            .connectTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
             .addNetworkInterceptor(new NetInterceptor())
             .addInterceptor(new LogBitmapInterceptor())
-            .writeTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .pingInterval(20, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .pingInterval(60, TimeUnit.SECONDS)
             .build();
 
     private static OkHttpClient mOkHttpClient = mOkHttpDefaultClient;
