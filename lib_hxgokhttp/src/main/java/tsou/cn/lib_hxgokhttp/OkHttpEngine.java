@@ -2,6 +2,8 @@ package tsou.cn.lib_hxgokhttp;
 
 import android.content.Context;
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
@@ -19,6 +21,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import tsou.cn.lib_hxgokhttp.application.HxgOkHttpContextProvider;
 import tsou.cn.lib_hxgokhttp.callback.BitmapCallBack;
 import tsou.cn.lib_hxgokhttp.callback.DownLoadFileCallBack;
 import tsou.cn.lib_hxgokhttp.callback.EngineCallBack;
@@ -38,6 +41,7 @@ class OkHttpEngine implements IHttpEngine {
             .newBuilder()
             .addNetworkInterceptor(new NetInterceptor())
             .addInterceptor(new LogInterceptor())
+            .addInterceptor(new ChuckerInterceptor(HxgOkHttpContextProvider.get().getApplication()))
             .connectTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
@@ -45,6 +49,7 @@ class OkHttpEngine implements IHttpEngine {
             .build();
     private static OkHttpClient mOkHttpDownClient = new OkHttpClient()
             .newBuilder()
+            .addInterceptor(new ChuckerInterceptor(HxgOkHttpContextProvider.get().getApplication()))
             .connectTimeout(60, TimeUnit.SECONDS)
             .addNetworkInterceptor(new NetInterceptor())
             .addInterceptor(new LogBitmapInterceptor())
